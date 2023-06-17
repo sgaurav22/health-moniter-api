@@ -45,11 +45,11 @@ public class ShiftServiceImpl implements ShiftService {
 
     @Override
     public Shift save(Shift shift) throws ClipboardException {
-        return null;
+        return shiftRepository.save(shift);
     }
 
     @Override
     public void delete(int id) throws ClipboardException {
-
+        shiftRepository.deleteById(id);
     }
 }

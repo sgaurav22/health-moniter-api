@@ -40,7 +40,7 @@ public class ShiftConroller {
         return new ResponseEntity<>(shifts, HttpStatus.OK);
     }
 
-    @PostMapping
+    @PostMapping("/shifts")
     public ResponseEntity<List<Shift>> addShift(@RequestBody List<Shift> shifts) {
         List<Shift> list = new ArrayList<>();
         if (Objects.nonNull(shifts)) {
@@ -49,6 +49,16 @@ public class ShiftConroller {
         }
 
         return new ResponseEntity<>(list, HttpStatus.CREATED);
+    }
+
+    @DeleteMapping("/shifts")
+    public ResponseEntity<String> deleteShift(@PathVariable Integer id) {
+        try {
+            shiftService.delete(id);
+            return new ResponseEntity<>("Shift deleted successfully", HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Error occurred while deleting", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
 }
