@@ -51,6 +51,31 @@ public class ShiftConroller {
         return new ResponseEntity<>(list, HttpStatus.CREATED);
     }
 
+    @PutMapping("/shifts")
+    public ResponseEntity<Shift> update(@PathVariable Integer id, @RequestBody Shift shift) {
+        Shift existingShift = null;
+        try {
+            existingShift = shiftService.findById(id);
+            if (Objects.nonNull(existingShift)) {
+                existingShift.setStart(shift.getStart());
+                existingShift.setEnd(shift.getEnd());
+                existingShift.setIsDeleted(shift.getIsDeleted());
+                existingShift.setProfession(shift.getProfession());
+                if (Objects.nonNull(shift.getFacility())) {
+                    existingShift.setFacility(shift.getFacility());
+                }
+                if (Objects.nonNull(shift.getWorker())) {
+                    existingShift.setWorker(shift.getWorker());
+                }
+
+                shiftService.save(existingShift);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>(existingShift, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return new ResponseEntity<>(existingShift, HttpStatus.OK);
+    }
+
     @DeleteMapping("/shifts")
     public ResponseEntity<String> deleteShift(@PathVariable Integer id) {
         try {
