@@ -19,17 +19,7 @@ import java.util.Optional;
 public class DocumentServiceImpl implements DocumentService {
 
     @Autowired
-    private DocumentRepository repository;
-
-    @Autowired
-    public DocumentServiceImpl(DocumentRepository repository) {
-        this.repository = repository;
-    }
-
-    @Override
-    public boolean validateDocument(String id) throws ClipboardException {
-        return repository.existsById(Integer.valueOf(id));
-    }
+    private DocumentRepository documentRepository;
 
     @Override
     public List<Document> findAll() throws ClipboardException {
@@ -40,15 +30,30 @@ public class DocumentServiceImpl implements DocumentService {
     @Override
     public List<Document> findAll(int offset, int limit) throws ClipboardException {
         List<Document> list = new ArrayList<>();
-        Page<Document> documents = repository.findAll(PageRequest.of(offset, limit));
+        Page<Document> documents = documentRepository.findAll(PageRequest.of(offset, limit));
         documents.forEach(list::add);
         return list;
     }
 
     @Override
     public Document findById(Integer id) throws ClipboardException {
-        Optional<Document> document = repository.findById(id);
+        Optional<Document> document = documentRepository.findById(id);
         return document.orElseThrow();
+    }
+
+    @Override
+    public Iterable<Document> saveAll(List<Document> documents) throws ClipboardException {
+        return documentRepository.saveAll(documents);
+    }
+
+    @Override
+    public Document save(Document document) throws ClipboardException {
+        return documentRepository.save(document);
+    }
+
+    @Override
+    public void delete(int id) throws ClipboardException {
+        documentRepository.deleteById(id);
     }
 
 }
