@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -58,6 +59,23 @@ public class DocumentController {
             throw new ClipboardException("Error occur while saving facilities");
         }
         return new ResponseEntity<>(documents, HttpStatus.CREATED);
+    }
+
+    @PutMapping
+    public ResponseEntity<Document> update(@PathVariable Integer id, @RequestBody Document document) {
+        Document existingDocument = null;
+        try{
+            existingDocument = documentService.findById(id);
+            if (Objects.nonNull(existingDocument)) {
+                existingDocument.setName(document.getName());
+                existingDocument.setIsActive(document.getIsActive());
+                documentService.save(existingDocument);
+            }
+        } catch (Exception e) {
+            logger.error("Error occurred ", e);
+            return new ResponseEntity<>(existingDocument, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return new ResponseEntity<>(existingDocument, HttpStatus.OK);
     }
 
     @DeleteMapping("/documents/{id}")
