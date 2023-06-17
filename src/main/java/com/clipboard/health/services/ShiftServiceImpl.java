@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ShiftServiceImpl implements ShiftService {
@@ -25,7 +26,8 @@ public class ShiftServiceImpl implements ShiftService {
 
     @Override
     public Shift findById(int id) throws ClipboardException {
-        return null;
+        Optional<Shift> optionalShift = shiftRepository.findById(id);
+        return optionalShift.orElseThrow();
     }
 
     @Override

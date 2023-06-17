@@ -17,7 +17,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1")
-@Tag(name = "Document")
+@Tag(name = "Document", description = "Document Management")
 public class DocumentController {
 
     Logger logger = LoggerFactory.getLogger(DocumentController.class);

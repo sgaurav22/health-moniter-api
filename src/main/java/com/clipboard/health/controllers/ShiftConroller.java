@@ -30,6 +30,11 @@ public class ShiftConroller {
         return new ResponseEntity<>(shiftService.findAll(), HttpStatus.OK);
     }
 
+    @GetMapping("/shifts/{id}")
+    public ResponseEntity<Shift> findById(@PathVariable Integer id) {
+        return new ResponseEntity<>(shiftService.findById(id), HttpStatus.OK);
+    }
+
     @GetMapping("/shifts/pagination/{offset}/{limit}")
     public ResponseEntity<List<Shift>> findAllShifts(@PathVariable int offset, @PathVariable int limit) {
         List<Shift> shifts = shiftService.findAll(offset, limit);
