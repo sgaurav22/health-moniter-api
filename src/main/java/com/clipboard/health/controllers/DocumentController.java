@@ -59,4 +59,14 @@ public class DocumentController {
         }
         return new ResponseEntity<>(documents, HttpStatus.CREATED);
     }
+
+    @DeleteMapping("/documents/{id}")
+    public ResponseEntity<String> delete(@PathVariable Integer id) {
+        try {
+            documentService.delete(id);
+            return new ResponseEntity<>("Document deleted successfully", HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Error occurred while deleting", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }
