@@ -66,7 +66,7 @@ public class WorkerController {
         return new ResponseEntity<>(existingWorker, HttpStatus.OK);
     }
 
-    @DeleteMapping("/workers")
+    @DeleteMapping("/workers/{id}")
     public ResponseEntity<String> deleteWorker(@PathVariable Integer id) {
         try {
             workerService.delete(id);

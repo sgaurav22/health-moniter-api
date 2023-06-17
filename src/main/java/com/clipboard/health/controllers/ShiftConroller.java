@@ -76,7 +76,7 @@ public class ShiftConroller {
         return new ResponseEntity<>(existingShift, HttpStatus.OK);
     }
 
-    @DeleteMapping("/shifts")
+    @DeleteMapping("/shifts/{id}")
     public ResponseEntity<String> deleteShift(@PathVariable Integer id) {
         try {
             shiftService.delete(id);
