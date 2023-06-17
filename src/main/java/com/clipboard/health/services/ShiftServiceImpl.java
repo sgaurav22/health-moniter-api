@@ -40,7 +40,7 @@ public class ShiftServiceImpl implements ShiftService {
 
     @Override
     public Iterable<Shift> saveAll(List<Shift> shifts) throws ClipboardException {
-        return null;
+        return shiftRepository.saveAll(shifts);
     }
 
     @Override

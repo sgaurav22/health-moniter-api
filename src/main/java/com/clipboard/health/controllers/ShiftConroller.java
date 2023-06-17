@@ -8,12 +8,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -39,6 +38,17 @@ public class ShiftConroller {
     public ResponseEntity<List<Shift>> findAllShifts(@PathVariable int offset, @PathVariable int limit) {
         List<Shift> shifts = shiftService.findAll(offset, limit);
         return new ResponseEntity<>(shifts, HttpStatus.OK);
+    }
+
+    @PostMapping
+    public ResponseEntity<List<Shift>> addShift(@RequestBody List<Shift> shifts) {
+        List<Shift> list = new ArrayList<>();
+        if (Objects.nonNull(shifts)) {
+            Iterable<Shift> iterable = shiftService.saveAll(shifts);
+            iterable.forEach(list::add);
+        }
+
+        return new ResponseEntity<>(list, HttpStatus.CREATED);
     }
 
 }
