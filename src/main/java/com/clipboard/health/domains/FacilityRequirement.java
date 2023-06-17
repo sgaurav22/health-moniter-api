@@ -8,7 +8,8 @@ import jakarta.persistence.*;
 @Table(name = "\"FacilityRequirement\"")
 public class FacilityRequirement {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(generator = "facility_requirement_gen", strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(name = "facility_requirement_gen", sequenceName = "FacilityRequirement_id_seq", allocationSize = 1)
     @Schema(accessMode = Schema.AccessMode.READ_ONLY)
     @Column(name = "id", nullable = false)
     private Integer id;

@@ -7,7 +7,8 @@ import jakarta.persistence.*;
 @Table(name = "\"Facility\"")
 public class Facility {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(generator = "facility_gen_gen", strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(name = "facility_gen", sequenceName = "Facility_id_seq", allocationSize = 1)
     @Schema(accessMode = Schema.AccessMode.READ_ONLY)
     @Column(name = "id", nullable = false)
     private Integer id;

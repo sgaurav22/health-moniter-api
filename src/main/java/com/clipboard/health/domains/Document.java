@@ -7,7 +7,8 @@ import jakarta.persistence.*;
 @Table(name = "\"Document\"")
 public class Document {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(generator = "doc_gen", strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(name = "doc_gen", sequenceName = "Document_id_seq", allocationSize = 1)
     @Schema(accessMode = Schema.AccessMode.READ_ONLY)
     @Column(name = "id", nullable = false)
     private Integer id;

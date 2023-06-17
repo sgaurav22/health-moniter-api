@@ -10,7 +10,8 @@ import java.time.Instant;
 @Table(name = "\"Shift\"")
 public class Shift {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(generator = "shift_gen", strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(name = "shift_gen", sequenceName = "Shift_id_seq", allocationSize = 1)
     @Schema(accessMode = Schema.AccessMode.READ_ONLY)
     @Column(name = "id", nullable = false)
     private Integer id;
