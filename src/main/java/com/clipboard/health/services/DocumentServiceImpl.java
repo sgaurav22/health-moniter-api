@@ -33,7 +33,7 @@ public class DocumentServiceImpl implements DocumentService {
 
     @Override
     public List<Document> findAll() throws ClipboardException {
-        List<Document> list = findAll(ClipboardConstant.DEFAULT_OFFSET,ClipboardConstant.DEFAULT_PAGE_LIMIT);
+        List<Document> list = findAll(ClipboardConstant.DEFAULT_OFFSET, ClipboardConstant.DEFAULT_PAGE_LIMIT);
         return list;
     }
 

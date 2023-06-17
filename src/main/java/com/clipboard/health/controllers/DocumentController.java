@@ -25,7 +25,7 @@ public class DocumentController {
     DocumentService documentService;
 
     @GetMapping("/documents")
-    public ResponseEntity<List<Document>> findAllDocument(){
+    public ResponseEntity<List<Document>> findAllDocument() {
         List<Document> documents = (List<Document>) documentService.findAll();
         return new ResponseEntity<>(documents, HttpStatus.OK);
     }
@@ -43,7 +43,7 @@ public class DocumentController {
     }
 
     @GetMapping("/documents/pagination/{offset}/{limit}")
-    public ResponseEntity<List<Document>> findAllDocument(@PathVariable int offset, @PathVariable int limit){
+    public ResponseEntity<List<Document>> findAllDocument(@PathVariable int offset, @PathVariable int limit) {
         List<Document> documentPage = documentService.findAll(offset, limit);
         return new ResponseEntity<>(documentPage, HttpStatus.OK);
     }
