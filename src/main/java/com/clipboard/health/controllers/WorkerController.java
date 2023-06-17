@@ -49,4 +49,21 @@ public class WorkerController {
         return new ResponseEntity<>(list, HttpStatus.CREATED);
     }
 
+    @PutMapping("/workers")
+    public ResponseEntity<Worker> update(@PathVariable Integer id, @RequestBody Worker worker) {
+        Worker existingWorker = null;
+        try {
+            existingWorker = workerService.findById(id);
+            if (Objects.nonNull(existingWorker)) {
+                existingWorker.setName(worker.getName());
+                existingWorker.setIsActive(worker.getIsActive());
+                existingWorker.setProfession(worker.getProfession());
+                workerService.save(existingWorker);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>(existingWorker, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return new ResponseEntity<>(existingWorker, HttpStatus.OK);
+    }
+
 }
