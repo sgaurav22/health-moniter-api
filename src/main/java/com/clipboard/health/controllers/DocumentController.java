@@ -61,7 +61,7 @@ public class DocumentController {
         return new ResponseEntity<>(documents, HttpStatus.CREATED);
     }
 
-    @PutMapping
+    @PutMapping("/documents/{id}")
     public ResponseEntity<Document> update(@PathVariable Integer id, @RequestBody Document document) {
         Document existingDocument = null;
         try{
