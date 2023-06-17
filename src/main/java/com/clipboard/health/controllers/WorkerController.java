@@ -66,4 +66,14 @@ public class WorkerController {
         return new ResponseEntity<>(existingWorker, HttpStatus.OK);
     }
 
+    @DeleteMapping("/workers")
+    public ResponseEntity<String> deleteWorker(@PathVariable Integer id) {
+        try {
+            workerService.delete(id);
+            return new ResponseEntity<>("Worker deleted successfully", HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Error occurred while deleting worker.", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 }
