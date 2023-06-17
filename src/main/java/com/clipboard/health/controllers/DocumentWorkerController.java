@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -27,6 +28,18 @@ public class DocumentWorkerController {
     @GetMapping("/documentWorker")
     public ResponseEntity<List<DocumentWorker>> findAll() {
         List<DocumentWorker> list = documentWorkerService.findAll();
+        return new ResponseEntity<>(list, HttpStatus.OK);
+    }
+
+    @GetMapping("/documentWorker/{id}")
+    public ResponseEntity<DocumentWorker> findById(@PathVariable Integer id) {
+        DocumentWorker documentWorker = documentWorkerService.findById(id);
+        return new ResponseEntity<>(documentWorker, HttpStatus.OK);
+    }
+
+    @GetMapping("/documentWorker/pagination/{offset}/{limit}")
+    public ResponseEntity<List<DocumentWorker>> findAll(@PathVariable Integer offset, @PathVariable Integer limit) {
+        List<DocumentWorker> list = documentWorkerService.findAll(offset, limit);
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
