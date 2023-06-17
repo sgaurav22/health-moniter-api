@@ -49,7 +49,7 @@ public class WorkerController {
         return new ResponseEntity<>(list, HttpStatus.CREATED);
     }
 
-    @PutMapping("/workers")
+    @PutMapping("/workers/{id}")
     public ResponseEntity<Worker> update(@PathVariable Integer id, @RequestBody Worker worker) {
         Worker existingWorker = null;
         try {

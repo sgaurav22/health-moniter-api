@@ -51,7 +51,7 @@ public class ShiftConroller {
         return new ResponseEntity<>(list, HttpStatus.CREATED);
     }
 
-    @PutMapping("/shifts")
+    @PutMapping("/shifts/{id}")
     public ResponseEntity<Shift> update(@PathVariable Integer id, @RequestBody Shift shift) {
         Shift existingShift = null;
         try {
