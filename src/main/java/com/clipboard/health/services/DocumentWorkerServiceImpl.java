@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -35,7 +36,8 @@ public class DocumentWorkerServiceImpl implements DocumentWorkerService{
 
     @Override
     public DocumentWorker findById(Integer id) throws ClipboardException {
-        return null;
+        Optional<DocumentWorker> optionalDocumentWorker = documentWorkerRepository.findById(id);
+        return optionalDocumentWorker.orElseThrow();
     }
 
     @Override
