@@ -100,4 +100,18 @@ public class DocumentWorkerController {
         return new ResponseEntity<>(existingDocumentWorker, HttpStatus.OK);
     }
 
+    @DeleteMapping("/documentWorkers/{id}")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "OK"),
+            @ApiResponse(responseCode = "500", description = "INTERNAL_SERVER_ERROR")
+    })
+    public ResponseEntity<String> delete(@PathVariable int id) {
+        try {
+            documentWorkerService.delete(id);
+            return new ResponseEntity<>("DocumentWorker deleted successfully", HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Error occurred while deleting", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 }
