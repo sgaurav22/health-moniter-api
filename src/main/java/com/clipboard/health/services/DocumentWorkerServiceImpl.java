@@ -42,16 +42,16 @@ public class DocumentWorkerServiceImpl implements DocumentWorkerService{
 
     @Override
     public Iterable<DocumentWorker> saveAll(List<DocumentWorker> documentWorkers) throws ClipboardException {
-        return null;
+        return documentWorkerRepository.saveAll(documentWorkers);
     }
 
     @Override
     public DocumentWorker save(DocumentWorker documentWorker) throws ClipboardException {
-        return null;
+        return documentWorkerRepository.save(documentWorker);
     }
 
     @Override
     public void delete(int id) throws ClipboardException {
-
+        documentWorkerRepository.deleteById(id);
     }
 }
