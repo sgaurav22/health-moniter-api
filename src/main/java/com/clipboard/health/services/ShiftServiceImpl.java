@@ -61,6 +61,7 @@ public class ShiftServiceImpl implements ShiftService {
     }
 
     @Override
+    @Cacheable(value = "shifts_isdeleted_offset")
     public List<Shift> findByIsDeleted(boolean deleted, int offset, int limit) throws SQLException {
         Page<Shift> page = null;
         if (offset == 0 && limit > 0) {
