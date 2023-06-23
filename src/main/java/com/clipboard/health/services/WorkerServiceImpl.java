@@ -5,6 +5,7 @@ import com.clipboard.health.domains.Worker;
 import com.clipboard.health.exceptions.ClipboardException;
 import com.clipboard.health.repositories.WorkerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -22,17 +23,20 @@ public class WorkerServiceImpl implements WorkerService {
     private WorkerRepository workerRepository;
 
     @Override
+    @Cacheable(value = "workers")
     public List<Worker> findAll() throws ClipboardException {
         return findAll(ClipboardConstant.DEFAULT_OFFSET, ClipboardConstant.DEFAULT_PAGE_LIMIT);
     }
 
     @Override
+    @Cacheable(value = "workers_id")
     public Worker findById(int id) throws ClipboardException {
         Optional<Worker> optionalWorker = workerRepository.findById(id);
         return optionalWorker.orElseThrow();
     }
 
     @Override
+    @Cacheable(value = "workers_offset")
     public List<Worker> findAll(int offset, int limit) throws ClipboardException {
         List<Worker> list = new ArrayList<>();
         Page<Worker> workers = workerRepository.findAll(PageRequest.of(offset, limit));

@@ -4,9 +4,11 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 
+import java.io.Serializable;
+
 @Entity
 @Table(name = "\"DocumentWorker\"")
-public class DocumentWorker {
+public class DocumentWorker implements Serializable {
     @Id
     @GeneratedValue(generator = "doc_worker_gen", strategy = GenerationType.SEQUENCE)
     @SequenceGenerator(name = "doc_worker_gen", sequenceName = "DocumentWorker_id_seq", allocationSize = 1)

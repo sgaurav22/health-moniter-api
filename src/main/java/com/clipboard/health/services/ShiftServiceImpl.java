@@ -5,6 +5,7 @@ import com.clipboard.health.domains.Shift;
 import com.clipboard.health.exceptions.ClipboardException;
 import com.clipboard.health.repositories.ShiftRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -22,17 +23,20 @@ public class ShiftServiceImpl implements ShiftService {
     private ShiftRepository shiftRepository;
 
     @Override
+    @Cacheable(value = "shifts")
     public List<Shift> findAll() throws ClipboardException {
         return findAll(ClipboardConstant.DEFAULT_OFFSET, ClipboardConstant.DEFAULT_PAGE_LIMIT);
     }
 
     @Override
+    @Cacheable(value = "shifts_id")
     public Shift findById(int id) throws ClipboardException {
         Optional<Shift> optionalShift = shiftRepository.findById(id);
         return optionalShift.orElseThrow();
     }
 
     @Override
+    @Cacheable(value = "shifts_offset")
     public List<Shift> findAll(int offset, int limit) throws ClipboardException {
         List<Shift> shifts = new ArrayList<>();
         Page<Shift> shiftPage = shiftRepository.findAll(PageRequest.of(offset, limit));

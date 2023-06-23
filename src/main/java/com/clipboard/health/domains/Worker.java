@@ -3,9 +3,11 @@ package com.clipboard.health.domains;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 
+import java.io.Serializable;
+
 @Entity
 @Table(name = "\"Worker\"")
-public class Worker {
+public class Worker implements Serializable {
     @Id
     @GeneratedValue(generator = "worker_gen", strategy = GenerationType.SEQUENCE)
     @SequenceGenerator(name = "worker_gen", sequenceName = "Worker_id_seq", allocationSize = 1)
@@ -17,7 +19,8 @@ public class Worker {
     private String name;
 
     @Column(name = "profession", columnDefinition = "Profession not null")
-    private String profession;
+    @Enumerated(value = EnumType.STRING)
+    private Profession profession;
     @Column(name = "is_active", nullable = false)
     private Boolean isActive = false;
 
@@ -46,11 +49,11 @@ public class Worker {
         this.isActive = isActive;
     }
 
-    public String getProfession() {
+    public Profession getProfession() {
         return profession;
     }
 
-    public void setProfession(String profession) {
+    public void setProfession(Profession profession) {
         this.profession = profession;
     }
 

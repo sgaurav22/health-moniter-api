@@ -5,6 +5,7 @@ import com.clipboard.health.domains.DocumentWorker;
 import com.clipboard.health.exceptions.ClipboardException;
 import com.clipboard.health.repositories.DocumentWorkerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -22,11 +23,13 @@ public class DocumentWorkerServiceImpl implements DocumentWorkerService{
     private DocumentWorkerRepository documentWorkerRepository;
 
     @Override
+    @Cacheable(value = "document_workers")
     public List<DocumentWorker> findAll() throws ClipboardException {
         return findAll(ClipboardConstant.DEFAULT_OFFSET, ClipboardConstant.DEFAULT_PAGE_LIMIT);
     }
 
     @Override
+    @Cacheable(value = "document_workers_offset")
     public List<DocumentWorker> findAll(int offset, int limit) throws ClipboardException {
         List<DocumentWorker> list = new ArrayList<>();
         Page<DocumentWorker> page = documentWorkerRepository.findAll(PageRequest.of(offset, limit));
@@ -35,6 +38,7 @@ public class DocumentWorkerServiceImpl implements DocumentWorkerService{
     }
 
     @Override
+    @Cacheable(value = "document_workers_id")
     public DocumentWorker findById(Integer id) throws ClipboardException {
         Optional<DocumentWorker> optionalDocumentWorker = documentWorkerRepository.findById(id);
         return optionalDocumentWorker.orElseThrow();

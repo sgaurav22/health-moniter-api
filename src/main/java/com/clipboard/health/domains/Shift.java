@@ -4,11 +4,12 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 
+import java.io.Serializable;
 import java.time.Instant;
 
 @Entity
 @Table(name = "\"Shift\"")
-public class Shift {
+public class Shift implements Serializable {
     @Id
     @GeneratedValue(generator = "shift_gen", strategy = GenerationType.SEQUENCE)
     @SequenceGenerator(name = "shift_gen", sequenceName = "Shift_id_seq", allocationSize = 1)
@@ -23,15 +24,16 @@ public class Shift {
     private Instant end;
 
     @Column(name = "profession", columnDefinition = "Profession not null")
-    private String profession;
+    @Enumerated(EnumType.STRING)
+    private Profession profession;
     @Column(name = "is_deleted", nullable = false)
     private Boolean isDeleted = false;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false, cascade=CascadeType.ALL)
     @JoinColumn(name = "facility_id", nullable = false)
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Facility facility;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
     @JoinColumn(name = "worker_id")
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Worker worker;
@@ -85,11 +87,11 @@ public class Shift {
         this.worker = worker;
     }
 
-    public String getProfession() {
+    public Profession getProfession() {
         return profession;
     }
 
-    public void setProfession(String profession) {
+    public void setProfession(Profession profession) {
         this.profession = profession;
     }
 

@@ -3,11 +3,13 @@ package com.clipboard.health.domains;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 
+import java.io.Serializable;
+
 @Entity
 @Table(name = "\"Facility\"")
-public class Facility {
+public class Facility implements Serializable {
     @Id
-    @GeneratedValue(generator = "facility_gen_gen", strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(generator = "facility_gen", strategy = GenerationType.SEQUENCE)
     @SequenceGenerator(name = "facility_gen", sequenceName = "Facility_id_seq", allocationSize = 1)
     @Schema(accessMode = Schema.AccessMode.READ_ONLY)
     @Column(name = "id", nullable = false)

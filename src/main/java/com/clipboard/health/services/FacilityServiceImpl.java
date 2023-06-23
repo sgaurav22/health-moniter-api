@@ -5,6 +5,7 @@ import com.clipboard.health.domains.Facility;
 import com.clipboard.health.exceptions.ClipboardException;
 import com.clipboard.health.repositories.FacilityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -22,18 +23,21 @@ public class FacilityServiceImpl implements FacilityService {
     private FacilityRepository repository;
 
     @Override
+    @Cacheable(value = "facilities")
     public List<Facility> findAll() throws ClipboardException {
         List<Facility> list = this.findAll(ClipboardConstant.DEFAULT_OFFSET, ClipboardConstant.DEFAULT_PAGE_LIMIT);
         return list;
     }
 
     @Override
+    @Cacheable(value = "facilities_id")
     public Facility findById(int id) throws ClipboardException {
         Optional<Facility> optional = repository.findById(id);
         return optional.orElseThrow();
     }
 
     @Override
+    @Cacheable(value = "facilities_offset")
     public List<Facility> findAll(int offset, int limit) throws ClipboardException {
         List<Facility> list = new ArrayList<>();
         Page<Facility> documents = repository.findAll(PageRequest.of(offset, limit));

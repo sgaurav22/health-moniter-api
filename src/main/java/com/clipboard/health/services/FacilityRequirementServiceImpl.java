@@ -5,6 +5,7 @@ import com.clipboard.health.domains.FacilityRequirement;
 import com.clipboard.health.exceptions.ClipboardException;
 import com.clipboard.health.repositories.FacilityRequirementRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -22,11 +23,13 @@ public class FacilityRequirementServiceImpl implements FacilityRequirementServic
     private FacilityRequirementRepository facilityRequirementRepository;
 
     @Override
+    @Cacheable(value = "facility_requirements")
     public List<FacilityRequirement> findAll() throws ClipboardException {
         return findAll(ClipboardConstant.DEFAULT_OFFSET, ClipboardConstant.DEFAULT_PAGE_LIMIT);
     }
 
     @Override
+    @Cacheable(value = "facility_requirements_offset")
     public List<FacilityRequirement> findAll(int offset, int limit) throws ClipboardException {
         List<FacilityRequirement> list = new ArrayList<>();
         Page<FacilityRequirement> page = facilityRequirementRepository.findAll(PageRequest.of(offset, limit));
@@ -35,6 +38,7 @@ public class FacilityRequirementServiceImpl implements FacilityRequirementServic
     }
 
     @Override
+    @Cacheable(value = "facility_requirements_id")
     public FacilityRequirement findById(Integer id) throws ClipboardException {
         Optional<FacilityRequirement> optionalFacilityRequirement = facilityRequirementRepository.findById(id);
         return optionalFacilityRequirement.orElseThrow();

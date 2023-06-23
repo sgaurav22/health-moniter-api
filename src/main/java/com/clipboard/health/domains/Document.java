@@ -3,9 +3,11 @@ package com.clipboard.health.domains;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 
+import java.io.Serializable;
+
 @Entity
 @Table(name = "\"Document\"")
-public class Document {
+public class Document implements Serializable {
     @Id
     @GeneratedValue(generator = "doc_gen", strategy = GenerationType.SEQUENCE)
     @SequenceGenerator(name = "doc_gen", sequenceName = "Document_id_seq", allocationSize = 1)
