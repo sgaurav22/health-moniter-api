@@ -11,6 +11,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -57,5 +58,18 @@ public class ShiftServiceImpl implements ShiftService {
     @Override
     public void delete(int id) throws ClipboardException {
         shiftRepository.deleteById(id);
+    }
+
+    @Override
+    public List<Shift> findByIsDeleted(boolean deleted, int offset, int limit) throws SQLException {
+        Page<Shift> page = null;
+        if (offset == 0 && limit > 0) {
+            page = shiftRepository.findByIsDeleted(deleted, PageRequest.of(ClipboardConstant.DEFAULT_OFFSET, limit));
+        } else if (offset > 0 && limit > 0) {
+            page = shiftRepository.findByIsDeleted(deleted, PageRequest.of(offset, limit));
+        } else
+            page = shiftRepository.findByIsDeleted(deleted, PageRequest.of(ClipboardConstant.DEFAULT_OFFSET, ClipboardConstant.DEFAULT_PAGE_LIMIT));
+
+        return page.getContent();
     }
 }

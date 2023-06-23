@@ -1,6 +1,7 @@
 package com.clipboard.health.controllers;
 
 import com.clipboard.health.domains.Shift;
+import com.clipboard.health.exceptions.ClipboardException;
 import com.clipboard.health.services.ShiftService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.slf4j.Logger;
@@ -10,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -36,9 +38,28 @@ public class ShiftConroller {
 
     @GetMapping("/shifts/pagination/{offset}/{limit}")
     public ResponseEntity<List<Shift>> findAllShifts(@PathVariable int offset, @PathVariable int limit) {
-        List<Shift> shifts = shiftService.findAll(offset, limit);
+        List<Shift> shifts = null;
+        try {
+            shifts = shiftService.findAll(offset, limit);
+        } catch (SQLException e) {
+            logger.error(e.getMessage());
+            throw new ClipboardException(e.getMessage());
+        }
         return new ResponseEntity<>(shifts, HttpStatus.OK);
     }
+
+    @GetMapping("/shifts/{isDeleted}/{offset}/{limit}")
+    public ResponseEntity<List<Shift>> findAllShiftsNotDeleted(@PathVariable boolean isDeleted, @PathVariable int offset, @PathVariable int limit) {
+        List<Shift> shifts = null;
+        try {
+            shifts = shiftService.findByIsDeleted(isDeleted, offset, limit);
+        } catch (SQLException e) {
+            logger.error(e.getMessage());
+            throw new ClipboardException(e.getMessage());
+        }
+        return new ResponseEntity<>(shifts, HttpStatus.OK);
+    }
+
 
     @PostMapping("/shifts")
     public ResponseEntity<List<Shift>> addShift(@RequestBody List<Shift> shifts) {
