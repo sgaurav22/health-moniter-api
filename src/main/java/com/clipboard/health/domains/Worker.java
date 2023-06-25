@@ -2,12 +2,19 @@ package com.clipboard.health.domains;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
+@Data
+@NoArgsConstructor
 @Entity
 @Table(name = "\"Worker\"")
 public class Worker implements Serializable {
+
+    static final long serialVersionUID = -3189229986729799152L;
+
     @Id
     @GeneratedValue(generator = "worker_gen", strategy = GenerationType.SEQUENCE)
     @SequenceGenerator(name = "worker_gen", sequenceName = "Worker_id_seq", allocationSize = 1)

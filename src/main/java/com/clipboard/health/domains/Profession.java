@@ -1,5 +1,7 @@
 package com.clipboard.health.domains;
 
-public enum Profession {
+import java.io.Serializable;
+
+public enum Profession implements Serializable {
     CNA, RN, LVN
 }

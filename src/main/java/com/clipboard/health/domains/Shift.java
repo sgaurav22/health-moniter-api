@@ -3,13 +3,19 @@ package com.clipboard.health.domains;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.time.Instant;
 
+@Data
+@NoArgsConstructor
 @Entity
 @Table(name = "\"Shift\"")
 public class Shift implements Serializable {
+
+    static final long serialVersionUID = 6793703608104335571L;
     @Id
     @GeneratedValue(generator = "shift_gen", strategy = GenerationType.SEQUENCE)
     @SequenceGenerator(name = "shift_gen", sequenceName = "Shift_id_seq", allocationSize = 1)
@@ -29,11 +35,11 @@ public class Shift implements Serializable {
     @Column(name = "is_deleted", nullable = false)
     private Boolean isDeleted = false;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false, cascade=CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false, cascade=CascadeType.ALL)
     @JoinColumn(name = "facility_id", nullable = false)
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Facility facility;
-    @ManyToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
     @JoinColumn(name = "worker_id")
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Worker worker;
