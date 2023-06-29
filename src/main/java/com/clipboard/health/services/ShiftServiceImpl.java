@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@Transactional
+@Transactional(readOnly = true)
 public class ShiftServiceImpl implements ShiftService {
 
     @Autowired
@@ -46,11 +46,13 @@ public class ShiftServiceImpl implements ShiftService {
     }
 
     @Override
+    @Transactional
     public Iterable<Shift> saveAll(List<Shift> shifts) throws ClipboardException {
         return shiftRepository.saveAll(shifts);
     }
 
     @Override
+    @Transactional
     public Shift save(Shift shift) throws ClipboardException {
         return shiftRepository.save(shift);
     }

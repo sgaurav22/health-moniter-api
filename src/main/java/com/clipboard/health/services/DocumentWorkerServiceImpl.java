@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@Transactional
+@Transactional(readOnly = true)
 public class DocumentWorkerServiceImpl implements DocumentWorkerService{
 
     @Autowired
@@ -45,11 +45,13 @@ public class DocumentWorkerServiceImpl implements DocumentWorkerService{
     }
 
     @Override
+    @Transactional
     public Iterable<DocumentWorker> saveAll(List<DocumentWorker> documentWorkers) throws ClipboardException {
         return documentWorkerRepository.saveAll(documentWorkers);
     }
 
     @Override
+    @Transactional
     public DocumentWorker save(DocumentWorker documentWorker) throws ClipboardException {
         return documentWorkerRepository.save(documentWorker);
     }

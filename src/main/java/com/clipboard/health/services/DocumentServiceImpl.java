@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@Transactional
+@Transactional(readOnly = true)
 public class DocumentServiceImpl implements DocumentService {
 
     @Autowired
@@ -48,12 +48,14 @@ public class DocumentServiceImpl implements DocumentService {
     }
 
     @Override
+    @Transactional
     /*@CacheEvict(value = "documents", allEntries = true)*/
     public Iterable<Document> saveAll(List<Document> documents) throws ClipboardException {
         return documentRepository.saveAll(documents);
     }
 
     @Override
+    @Transactional
     @CachePut(value = "documents")
     public Document save(Document document) throws ClipboardException {
         return documentRepository.save(document);

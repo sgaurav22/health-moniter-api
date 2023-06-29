@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@Transactional
+@Transactional(readOnly = true)
 public class WorkerServiceImpl implements WorkerService {
 
     @Autowired
@@ -45,11 +45,13 @@ public class WorkerServiceImpl implements WorkerService {
     }
 
     @Override
+    @Transactional
     public Iterable<Worker> saveAll(List<Worker> workers) throws ClipboardException {
         return workerRepository.saveAll(workers);
     }
 
     @Override
+    @Transactional
     public Worker save(Worker worker) throws ClipboardException {
         return workerRepository.save(worker);
     }

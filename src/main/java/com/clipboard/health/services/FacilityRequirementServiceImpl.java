@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@Transactional
+@Transactional(readOnly = true)
 public class FacilityRequirementServiceImpl implements FacilityRequirementService {
 
     @Autowired
@@ -45,11 +45,13 @@ public class FacilityRequirementServiceImpl implements FacilityRequirementServic
     }
 
     @Override
+    @Transactional
     public Iterable<FacilityRequirement> saveAll(List<FacilityRequirement> facilityRequirements) throws ClipboardException {
         return facilityRequirementRepository.saveAll(facilityRequirements);
     }
 
     @Override
+    @Transactional
     public FacilityRequirement save(FacilityRequirement facilityRequirement) throws ClipboardException {
         return facilityRequirementRepository.save(facilityRequirement);
     }
