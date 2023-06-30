@@ -1,0 +1,4 @@
+Label,# Samples,Average,Min,Max,Std. Dev.,Error %,Throughput,Received KB/sec,Sent KB/sec,Avg. Bytes
+HTTP Request Get All Documents,500,150,11,732,140.13,0.000%,44.22039,40.12,5.53,929.0
+HTTP Request Get All Active Shifts,500,195,11,709,143.09,0.000%,42.41602,118.14,5.38,2852.0
+TOTAL,1000,173,11,732,143.44,0.000%,84.06894,155.21,10.59,1890.5
