@@ -36,7 +36,7 @@ public class ShiftConroller {
         return new ResponseEntity<>(shiftService.findById(id), HttpStatus.OK);
     }
 
-    @GetMapping("/shifts/active/{offset}/{limit}")
+    @GetMapping("/shifts/active/facilities/active/{offset}/{limit}")
     public ResponseEntity<List<Shift>> findAll(@PathVariable int offset, @PathVariable int limit) {
         try {
             List<Shift> activeShifts = shiftService.getActiveShifts(offset, limit);
