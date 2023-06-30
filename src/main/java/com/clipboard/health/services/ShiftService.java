@@ -8,6 +8,8 @@ import java.util.List;
 
 public interface ShiftService {
 
+    public List<Shift> getActiveShifts(int offset, int limit ) throws SQLException;
+
     public List<Shift> findAll() throws ClipboardException;
 
     public Shift findById(int id) throws ClipboardException;

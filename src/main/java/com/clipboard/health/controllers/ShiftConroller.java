@@ -26,17 +26,27 @@ public class ShiftConroller {
     @Autowired
     private ShiftService shiftService;
 
-    @GetMapping("/shifts")
+    /*@GetMapping("/shifts")
     public ResponseEntity<List<Shift>> findAll() {
         return new ResponseEntity<>(shiftService.findAll(), HttpStatus.OK);
-    }
+    }*/
 
     @GetMapping("/shifts/{id}")
     public ResponseEntity<Shift> findById(@PathVariable Integer id) {
         return new ResponseEntity<>(shiftService.findById(id), HttpStatus.OK);
     }
 
-    @GetMapping("/shifts/pagination/{offset}/{limit}")
+    @GetMapping("/shifts/active/{offset}/{limit}")
+    public ResponseEntity<List<Shift>> findAll(@PathVariable int offset, @PathVariable int limit) {
+        try {
+            List<Shift> activeShifts = shiftService.getActiveShifts(offset, limit);
+            return new ResponseEntity<>(activeShifts, HttpStatus.OK);
+        } catch (SQLException e) {
+            throw new ClipboardException(e.getLocalizedMessage());
+        }
+    }
+
+    @GetMapping("/shifts/{offset}/{limit}")
     public ResponseEntity<List<Shift>> findAllShifts(@PathVariable int offset, @PathVariable int limit) {
         List<Shift> shifts = null;
         try {

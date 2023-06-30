@@ -24,6 +24,13 @@ public class ShiftServiceImpl implements ShiftService {
     private ShiftRepository shiftRepository;
 
     @Override
+    @Cacheable(value = "shifts_active")
+    public List<Shift> getActiveShifts(int offset, int limit) throws SQLException {
+        List<Shift> activeShifts = shiftRepository.getActiveShifts(false, true, PageRequest.of(offset, limit));
+        return activeShifts;
+    }
+
+    @Override
     @Cacheable(value = "shifts")
     public List<Shift> findAll() throws ClipboardException {
         return findAll(ClipboardConstant.DEFAULT_OFFSET, ClipboardConstant.DEFAULT_PAGE_LIMIT);
